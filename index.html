@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather API use JQuery</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="weather.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="weather.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="tabbar">
+		<div id="CurrentCity" class="tab tabCity">Current City</div>
+		<div id="NextDays" class="tab tabNext">Next Days</div>
+	</div>
+	<div class="content_block">
+		<div id="content_city" style="display:none">
+			<div class="select">
+				<select id="changeCity">
+					<option value="Taipei">Taipei</option>
+					<option value="NewYork">New York</option>
+					<option value="London">London</option>
+				</select>
+			</div>
+			<div class="city_info"></div>
+		</div>
+		<div id="content_next" style="display:none">
+			<div class="select">
+				<select id="changeDays">
+					<option value="5">5 days</option>
+					<option value="7">7 days</option>
+					<option value="16">16 days</option>
+				</select>
+				<h3>Next days</h3>
+				<div id="daily_list"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
