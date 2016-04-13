@@ -1,13 +1,13 @@
+(function($) {
 
-var TabController = function (tagTitle, tabContent) {
-    this.title = tagTitle;
-    this.dom = tabContent;
-};
+	function addNewElement(target, newDom, style, title) {
+		$(target).append('<div id="'+newDom+'" class="'+style+'">'+title+'</div>');
+	}
 
-TabController.prototype = {
-    title: '',
-    dom: '',
-    Implement: function () {
-        $(".tabbar").append('<div id="'+this.dom+'" class="tab">'+this.title+'</div>');
-    }
-};
+    $.fn.extend({
+        TabController: function(newDom, style, title) {
+             addNewElement(this, newDom, style, title);
+        }
+     });
+
+})(jQuery);
