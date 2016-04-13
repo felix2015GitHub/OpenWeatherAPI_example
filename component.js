@@ -1,13 +1,17 @@
 (function($) {
 
-	function addNewElement(target, newDom, style, title) {
-		$(target).append('<div id="'+newDom+'" class="'+style+'">'+title+'</div>');
-	}
+    $.fn.TabController = function( options ) {
 
-    $.fn.extend({
-        TabController: function(newDom, style, title) {
-             addNewElement(this, newDom, style, title);
-        }
-     });
+        var settings = $.extend({
+            text: '',
+            newDom: '',
+            style: ''
+        }, options);
 
-})(jQuery);
+        return this.each( function() {
+            $(this).append('<div id="'+settings.newDom+'" class="'+settings.style+'">'+settings.text+'</div>');
+        });
+
+    }
+
+}(jQuery));
