@@ -9,8 +9,8 @@ var tmp={
 };
 
 $(document).ready(function(){
-	$(".tabbar").TabController("CurrentCity", "tab", "Current City");
-	$(".tabbar").TabController("NextDays", "tab", "Next Days");
+	$(".tabbar").TabController({newDom:"CurrentCity", style:"tab", text:"Current City"});
+	$(".tabbar").TabController({newDom:"NextDays", style:"tab", text:"Next Days"});
 	$("input:radio[name='typeSel'][value='"+tmp.type+"']").prop('checked',true);
 	$("#NextDays").addClass("tab_selected");
 	$("#changeDays").val(tmp.currentDays);
