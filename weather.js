@@ -88,7 +88,7 @@ function showNextDays(data, days){
 			var weatherDes = getNodeValue(data, "//forecast/time["+(i+1)+"]/symbol/@name").nodeValue;
 			var speed = getNodeValue(data, "//forecast/time["+(i+1)+"]/windSpeed/@mps").nodeValue;
 			var cloudsAll = getNodeValue(data, "//forecast/time["+(i+1)+"]/clouds/@all").nodeValue;
-			var pressure = getNodeValue(data, "//forecast/time["+(i+1)+"]/clouds/@value").nodeValue;
+			var pressure = getNodeValue(data, "//forecast/time["+(i+1)+"]/pressure/@value").nodeValue;
 		}else{
 			var monTmp = new Date((data.list[i].dt)*1000).getMonth();
 			var mon = tmp.month[monTmp];
