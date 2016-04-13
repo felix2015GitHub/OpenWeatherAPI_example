@@ -9,6 +9,10 @@ var tmp={
 };
 
 $(document).ready(function(){
+	var cityBtn = new TabController("Current City", "CurrentCity");
+	var daysBtn = new TabController("Next Days", "NextDays");
+	cityBtn.Implement();
+	daysBtn.Implement();
 	$("input:radio[name='typeSel'][value='"+tmp.type+"']").prop('checked',true);
 	$("#NextDays").addClass("tab_selected");
 	$("#changeDays").val(tmp.currentDays);
