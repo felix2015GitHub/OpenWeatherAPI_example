@@ -62,7 +62,7 @@ $(document).ready(function(){
 
 function getNodeValue(data, xpath){
 	var nodes = data.evaluate(xpath, data, null, XPathResult.ANY_TYPE, null);
-	return nodes.iterateNext();
+	return nodes.iterateNext().nodeValue;
 }
 
 function getNextDaysData(days, type){
@@ -79,16 +79,16 @@ function showNextDays(data, days){
 	html += '<tbody>';
 	for(var i=0;i<days;i++){
 		if(tmp.type=="xml"){
-			var getDay = getNodeValue(data, "//forecast/time["+(i+1)+"]/@day").nodeValue;
+			var getDay = getNodeValue(data, "//forecast/time["+(i+1)+"]/@day");
 			var mon = tmp.month[parseInt((getDay.split("-")[1]))-1];
 			var day = getDay.split("-")[2];
-			var icon = getNodeValue(data, "//forecast/time["+(i+1)+"]/symbol/@var").nodeValue;
-			var temperatureMax = Math.round(getNodeValue(data, "//forecast/time["+(i+1)+"]/temperature/@max").nodeValue);
-			var temperatureMin = Math.round(getNodeValue(data, "//forecast/time["+(i+1)+"]/temperature/@min").nodeValue);
-			var weatherDes = getNodeValue(data, "//forecast/time["+(i+1)+"]/symbol/@name").nodeValue;
-			var speed = getNodeValue(data, "//forecast/time["+(i+1)+"]/windSpeed/@mps").nodeValue;
-			var cloudsAll = getNodeValue(data, "//forecast/time["+(i+1)+"]/clouds/@all").nodeValue;
-			var pressure = getNodeValue(data, "//forecast/time["+(i+1)+"]/pressure/@value").nodeValue;
+			var icon = getNodeValue(data, "//forecast/time["+(i+1)+"]/symbol/@var");
+			var temperatureMax = Math.round(getNodeValue(data, "//forecast/time["+(i+1)+"]/temperature/@max"));
+			var temperatureMin = Math.round(getNodeValue(data, "//forecast/time["+(i+1)+"]/temperature/@min"));
+			var weatherDes = getNodeValue(data, "//forecast/time["+(i+1)+"]/symbol/@name");
+			var speed = getNodeValue(data, "//forecast/time["+(i+1)+"]/windSpeed/@mps");
+			var cloudsAll = getNodeValue(data, "//forecast/time["+(i+1)+"]/clouds/@all");
+			var pressure = getNodeValue(data, "//forecast/time["+(i+1)+"]/pressure/@value");
 		}else{
 			var monTmp = new Date((data.list[i].dt)*1000).getMonth();
 			var mon = tmp.month[monTmp];
@@ -126,11 +126,11 @@ function showCurrentCity(data){
 	var c = new Date();
 
 	if(tmp.type=="xml"){
-		var cityName = getNodeValue(data, "//city/@name").nodeValue;
-		var country = getNodeValue(data, "//city/country/text()").nodeValue;
-		var temperature = Math.round(getNodeValue(data, "//temperature/@value").nodeValue);
-		var icon = getNodeValue(data, "//weather/@icon").nodeValue;
-		var getCityDes = getNodeValue(data, "//weather/@number").nodeValue;
+		var cityName = getNodeValue(data, "//city/@name");
+		var country = getNodeValue(data, "//city/country/text()");
+		var temperature = Math.round(getNodeValue(data, "//temperature/@value"));
+		var icon = getNodeValue(data, "//weather/@icon");
+		var getCityDes = getNodeValue(data, "//weather/@number");
 		var cityDes;
 		switch(getCityDes.slice(0,1)){
 			case "2": cityDes="Thunderstorm"; break;
@@ -141,25 +141,25 @@ function showCurrentCity(data){
 				getCityDes=="800" ? cityDes="Clear":cityDes="Clouds";
 				break;
 			default:
-				var getCityDesVal=getNodeValue(data, "//weather/@value").nodeValue;
+				var getCityDesVal=getNodeValue(data, "//weather/@value");
 				var strlen=getCityDesVal.length;
 				var firstChar=getCityDesVal.slice(0,1).toUpperCase();
 				cityDes=firstChar+getCityDesVal.slice(1,strlen);
 				break;
 		}
-		var speedName = getNodeValue(data, "//wind/speed/@name").nodeValue;
-		var speedVal = getNodeValue(data, "//wind/speed/@value").nodeValue
-		var directionName = getNodeValue(data, "//wind/direction/@name").nodeValue;
-		var directionVal = getNodeValue(data, "//wind/direction/@value").nodeValue;
-		var cloudsName = getNodeValue(data, "//clouds/@name").nodeValue;
-		var pressureVal = getNodeValue(data, "//pressure/@value").nodeValue;
-		var humidityVal = getNodeValue(data, "//humidity/@value").nodeValue;
-		var getSunrise = new Date(getNodeValue(data, "//city/sun/@rise").nodeValue);
-		var getSunset = new Date(getNodeValue(data, "//city/sun/@set").nodeValue);
+		var speedName = getNodeValue(data, "//wind/speed/@name");
+		var speedVal = getNodeValue(data, "//wind/speed/@value");
+		var directionName = getNodeValue(data, "//wind/direction/@name");
+		var directionVal = getNodeValue(data, "//wind/direction/@value");
+		var cloudsName = getNodeValue(data, "//clouds/@name");
+		var pressureVal = getNodeValue(data, "//pressure/@value");
+		var humidityVal = getNodeValue(data, "//humidity/@value");
+		var getSunrise = new Date(getNodeValue(data, "//city/sun/@rise"));
+		var getSunset = new Date(getNodeValue(data, "//city/sun/@set"));
 		var sunrise = getSunrise.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
 		var sunset = getSunset.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
-		var coordlon = getNodeValue(data, "//city/coord/@lon").nodeValue;
-		var coordlat = getNodeValue(data, "//city/coord/@lat").nodeValue;
+		var coordlon = getNodeValue(data, "//city/coord/@lon");
+		var coordlat = getNodeValue(data, "//city/coord/@lat");
 	}else{
 		var cityName = data.name;
 		var country = data.sys.country;
