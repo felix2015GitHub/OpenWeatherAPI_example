@@ -1,3 +1,4 @@
+/*
 (function($) {
 
     $.fn.TabController = function( options ) {
@@ -15,3 +16,15 @@
     }
 
 }(jQuery));
+*/
+
+var TabController = (function(){
+
+    return {
+        addElement : function( obj ){
+            $(obj.srcDom).append('<'+obj.tag+' id="'+obj.newDom+'" class="'+obj.style+'">'+obj.text+'</'+obj.tag+'>');
+        }
+
+    };
+    
+}());
