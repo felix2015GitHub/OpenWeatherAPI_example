@@ -1,3 +1,5 @@
+(function(){
+
 var TabController = function(obj){
     this.srcDom = obj.srcDom;
     this.newDom = obj.newDom;
@@ -34,3 +36,7 @@ TabController.prototype = {
         this.func();
     }
 };
+
+window.TabController = TabController;
+
+}());
