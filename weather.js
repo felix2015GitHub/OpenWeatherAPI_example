@@ -9,13 +9,34 @@ var tmp={
 };
 
 $(document).ready(function(){
-	TabController.addElement({tag:"div", srcDom:".tabbar", newDom:"CurrentCity", style:"tab", text:"Current City"});
-	TabController.addElement({tag:"div", srcDom:".tabbar", newDom:"NextDays", style:"tab", text:"Next Days"});
+	var currentCity = new TabController({
+		srcDom:".tabbar",
+		newDom:"CurrentCity",
+		text:"Current City",
+		select:"0",
+		initFunc: function(){
+			tmp.defpage="city";
+			getCurrentCityData(tmp.currentCity, tmp.type);
+		}
+	});
+	var nextDays = new TabController({
+		srcDom:".tabbar",
+		newDom:"NextDays",
+		text:"Next Days",
+		select:"1",
+		initFunc: function(){
+			tmp.defpage="days";
+			getNextDaysData(tmp.currentDays, tmp.type);
+		}
+	});
+	currentCity.addTab();
+	nextDays.addTab();
 	$("input:radio[name='typeSel'][value='"+tmp.type+"']").prop('checked',true);
-	$("#NextDays").addClass("tab_selected");
+	//$("#NextDays").addClass("tab_selected");
 	$("#changeDays").val(tmp.currentDays);
-	getNextDaysData(tmp.currentDays, tmp.type);
-	$("#content_next").show();
+	//getNextDaysData(tmp.currentDays, tmp.type);
+	//$("#content_next").show();
+	/*
 	$("#CurrentCity").click(function(){
 		$("#NextDays").removeClass("tab_selected");
 		$("#CurrentCity").addClass("tab_selected");
@@ -30,6 +51,7 @@ $(document).ready(function(){
 		tmp.defpage="days";
 		getNextDaysData(tmp.currentDays, tmp.type);
 	});
+	*/
 	$("#changeCity").val(tmp.currentCity);
 	$("#changeDays").change(function(){
 		$(this).attr("disabled", true);
