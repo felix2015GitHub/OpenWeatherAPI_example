@@ -1,87 +1,14 @@
 (function(){
 
-var tmp={
-	defpage:"days",
-	type:"xml",
-	currentCity:"London",
-	currentDays:7,
-	month:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-};
-
 $(document).ready(function(){
-	var currentCity = new TabController({
-		srcDom:".tabbar",
-		newDom:"CurrentCity",
-		text:"Current City",
-		select:"0",
-		initFunc: function(){
-			tmp.defpage="city";
-			getCurrentCityData(tmp.currentCity, tmp.type);
-		}
-	});
-	var nextDays = new TabController({
-		srcDom:".tabbar",
-		newDom:"NextDays",
-		text:"Next Days",
-		select:"1",
-		initFunc: function(){
-			tmp.defpage="days";
-			getNextDaysData(tmp.currentDays, tmp.type);
-		}
-	});
-	currentCity.addTab();
-	nextDays.addTab();
-	$("input:radio[name='typeSel'][value='"+tmp.type+"']").prop('checked',true);
-	//$("#NextDays").addClass("tab_selected");
-	$("#changeDays").val(tmp.currentDays);
-	//getNextDaysData(tmp.currentDays, tmp.type);
-	//$("#content_next").show();
-	/*
-	$("#CurrentCity").click(function(){
-		$("#NextDays").removeClass("tab_selected");
-		$("#CurrentCity").addClass("tab_selected");
-		tmp.defpage="city";
-		getCurrentCityData(tmp.currentCity, tmp.type);
-		$("#content_next").hide();
-	});
-	$("#NextDays").click(function(){
-		$("#CurrentCity").removeClass("tab_selected");
-		$("#NextDays").addClass("tab_selected");
-		$("#content_city").hide();
-		tmp.defpage="days";
-		getNextDaysData(tmp.currentDays, tmp.type);
-	});
-	*/
-	$("#changeCity").val(tmp.currentCity);
-	$("#changeDays").change(function(){
-		$(this).attr("disabled", true);
-		tmp.currentDays=$(this).val();
-		getNextDaysData($(this).val(), tmp.type);
-	});
-	$("#changeCity").change(function(){
-		$(this).attr("disabled", true);
-		tmp.currentCity=$(this).val();
-		getCurrentCityData($(this).val(), tmp.type);
-	});
-	$("input:radio[name='typeSel']").change(function(){
-		if($(this).val() == "xml"){
-			tmp.type="xml";
-			if(tmp.defpage=="days"){
-				getNextDaysData(tmp.currentDays, "xml");
-			}else{
-				getCurrentCityData(tmp.currentCity, "xml");
-			}
-		}else{
-			tmp.type="json";
-			if(tmp.defpage=="days"){
-				getNextDaysData(tmp.currentDays, "json");
-			}else{
-				getCurrentCityData(tmp.currentCity, "json");
-			}
-		}
-	});
+	var newTab = new TabController();
+	newTab.addTab("CurrentCity");
+	newTab.addTab("NextDays");
+	newTab.addRadioBtn("XML", "xml");
+	newTab.addRadioBtn("JSON", "json");
+	newTab.init();	
 });
-
+/*
 function getNodeValue(data, xpath){
 	var nodes = data.evaluate(xpath, data, null, XPathResult.ANY_TYPE, null);
 	return nodes.iterateNext().nodeValue;
@@ -269,5 +196,6 @@ function showCurrentCity(data){
 	$("#content_city").show();
 	$("#changeCity").attr("disabled", false);
 }
+*/
 
 }());
