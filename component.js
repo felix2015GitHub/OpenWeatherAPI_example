@@ -12,7 +12,6 @@ TabController.prototype = {
         type: "xml",
         currentCurrentCity: 'London',
         currentNextDays: 7,
-        radioText: '',
         radioVal: '',
         month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         poolCurrentCity: ["Taipei", "NewYork", "London"],
@@ -29,12 +28,12 @@ TabController.prototype = {
         this.addSelect(name);
         this.addClickEvents();
     },
-    addRadioBtn: function(text, val){
-        this.options.radioText = text;
+    addRadioBtn: function(val){
         this.options.radioVal = val;
-        $(".typeSelect > span").append('<input type="radio" name="typeSel" value="'+val+'"></input><span>'+text+'</span>');
+        $(".typeSelect > span").append('<input type="radio" name="typeSel" value="'+val+'"></input><span>'+val.toUpperCase()+'</span>');
         this.addChangeEvent();
     },
+
     addSelect: (function(name){
         var selectHTML = '';
         selectHTML += '<select id="change'+name+'">';
@@ -45,6 +44,8 @@ TabController.prototype = {
         $("#content_tab"+name+" > .select > div").html(selectHTML);
         this.addSelectEvent(name);
     }),
+
+    //Click Event
     addClickEvents: (function(){
         $("#"+this.options.tabId).bind('click', {context: this}, this.onClick);
     }),
@@ -52,6 +53,12 @@ TabController.prototype = {
         var self = ev.data.context;
         self.handleCellClick(this.childNodes[0].nodeValue);
     }),
+    handleCellClick: (function(id){
+        this.options.currentSelect = id;
+        this.display();
+    }),
+
+    //Radio Buttin Change Event
     addChangeEvent: (function(){
         $("input:radio[name='typeSel']").bind('change', {context: this}, this.onChange);
     }),
@@ -59,22 +66,20 @@ TabController.prototype = {
         var self = ev.data.context;
         self.handleCellChange(this.value);
     }),
+    handleCellChange: (function(val){
+        this.options.type = val;
+        this.getNextDaysData();
+        this.getCurrentCityData();
+        this.display();
+    }),
+
+    //Select options Change Event
     addSelectEvent: (function(name){
         $("#change"+name).bind('change', {context: this}, this.onChangeSelect);
     }),
     onChangeSelect: (function(ev){
         var self = ev.data.context;
         self.handleCellSelect(this.value);
-    }),
-    handleCellClick: (function(id){
-        this.options.currentSelect = id;
-        this.display();
-    }),
-    handleCellChange: (function(val){
-        this.options.type = val;
-        this.getNextDaysData();
-        this.getCurrentCityData();
-        this.display();
     }),
     handleCellSelect: (function(val){
         this.options["current"+this.options.currentSelect] = val;
@@ -83,10 +88,12 @@ TabController.prototype = {
         this.getCurrentCityData();
         this.display();
     }),
+
     getNodeValue: (function(data, xpath){
         var nodes = data.evaluate(xpath, data, null, XPathResult.ANY_TYPE, null);
         return nodes.iterateNext().nodeValue;
     }),
+
     getNextDaysData: (function(){
         var apiURL = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+this.options.currentCurrentCity+"&mode="+this.options.type+"&units=metric&cnt="+this.options.currentNextDays+"&appid=8b5e25806eda1463bbfb1ce83b50c4e9";
         var request = new XMLHttpRequest();
@@ -100,6 +107,7 @@ TabController.prototype = {
             this.showNextDays(json);
         }
     }),
+
     showNextDays: (function(data){
         var html="";
         html += '<table class="table">';
@@ -138,6 +146,7 @@ TabController.prototype = {
         html += '</tbody></table>';
         $("#daily_list").html(html);
     }),
+
     getCurrentCityData: (function(){
         var apiURL = "http://api.openweathermap.org/data/2.5/weather?q="+this.options.currentCurrentCity+"&mode="+this.options.type+"&units=metric&appid=8b5e25806eda1463bbfb1ce83b50c4e9";
         var request = new XMLHttpRequest();
@@ -151,6 +160,7 @@ TabController.prototype = {
             this.showCurrentCity(json);
         }
     }),
+
     showCurrentCity: (function(data){
         var c = new Date();
         if(this.options.type == "xml"){
@@ -273,6 +283,7 @@ TabController.prototype = {
                 '</table>';
         $(".city_info").html(html);
     }),
+
     display: (function(){
         var i, poolLength = this.options.tabPool.length;
         $(".tabbar > div").removeClass("tab_selected");
@@ -283,6 +294,7 @@ TabController.prototype = {
         }
         $("#content_tab"+this.options.currentSelect).show();
     }),
+
     init: (function(){
         $("#tab"+this.options.currentSelect).addClass("tab_selected");
         $("input:radio[name='typeSel'][value='"+this.options.type+"']").prop('checked',true);
